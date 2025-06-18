@@ -1,0 +1,28 @@
+.container {
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: flex-start;
+padding: 0px;
+margin-y: 2rem;
+flex: none;
+order: 0;
+flex-grow: 0;
+}
+
+.descriptionContainer{
+display: flex;
+max-width: 600px;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+gap: 32px;
+
+}
+
+.galleryContainer{
+flex: none;
+order: 0;
+flex-grow: 0;
+
+}

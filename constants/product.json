@@ -1,0 +1,400 @@
+{
+    "products": [
+        {
+            "id": 15428343497086,
+            "title": "Apple Pie Cookie",
+            "handle": "apple-pie-cookie",
+            "body_html": "<h2 data-mce-fragment=\"1\">Order Apple Pie Cookie Delivery</h2>\n<h3 data-mce-fragment=\"1\">USA! USA!<br data-mce-fragment=\"1\">\n</h3>\n<p data-mce-fragment=\"1\">These classics are as authentically American as…well, apple pie. Bursting with the essence of everybody’s favorite fruit, this<span data-mce-fragment=\"1\"> </span><strong data-mce-fragment=\"1\">apple pie filling cookie</strong><span data-mce-fragment=\"1\"> </span>do not disappoint. Give your teacher one of these quintessential treats and you’ll be asked to stay after class… <br data-mce-fragment=\"1\"></p>\n<h3 data-mce-fragment=\"1\">Apple Pie Cookie - It's All About The Apples</h3>\n<span data-mce-fragment=\"1\">Warm and chewy, you won’t be able to resist these straight-from-the-orchard delicacies. That’s right, friends, an </span><strong data-mce-fragment=\"1\">apple pie cookie</strong><span data-mce-fragment=\"1\"> a day keeps the hunger away. What makes these so tempting? As Eve can tell you, it’s all about the apples.</span>\n<p data-mce-fragment=\"1\">We use organic cartelized apples, which are so bitingly tangy that when we combine them with our curiously comforting cane sugar and vivacious vanilla, the end result is an audacious apple pie cookie that is worth being cast out of Eden for. So, order a batch today and cut yourself a supple slice of this sensual mainstay, guaranteed to make you say “Yum…”</p>",
+            "published_at": "2025-06-12T03:57:41-04:00",
+            "created_at": "2025-06-12T03:57:50-04:00",
+            "updated_at": "2025-06-13T11:12:55-04:00",
+            "vendor": "neli-zarkova",
+            "product_type": "",
+            "tags": [],
+            "variants": [
+                {
+                    "id": 55726609269118,
+                    "title": "Default Title",
+                    "option1": "Default Title",
+                    "option2": null,
+                    "option3": null,
+                    "sku": "",
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "5.75",
+                    "grams": 142,
+                    "compare_at_price": null,
+                    "position": 1,
+                    "product_id": 15428343497086,
+                    "created_at": "2025-06-12T03:57:50-04:00",
+                    "updated_at": "2025-06-13T11:12:55-04:00"
+                }
+            ],
+            "images": [
+                {
+                    "id": 76661879964030,
+                    "created_at": "2025-06-12T03:57:50-04:00",
+                    "position": 1,
+                    "updated_at": "2025-06-12T03:57:50-04:00",
+                    "product_id": 15428343497086,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0943/3877/7470/files/applepie2_1.png?v=1749715070",
+                    "width": 2059,
+                    "height": 2069
+                },
+                {
+                    "id": 76661880029566,
+                    "created_at": "2025-06-12T03:57:50-04:00",
+                    "position": 2,
+                    "updated_at": "2025-06-12T03:57:50-04:00",
+                    "product_id": 15428343497086,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0943/3877/7470/files/applepienew_1.png?v=1749715070",
+                    "width": 1440,
+                    "height": 1440
+                }
+            ],
+            "options": [
+                {
+                    "name": "Title",
+                    "position": 1,
+                    "values": [
+                        "Default Title"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 15428342579582,
+            "title": "Belgian Hazelnut Cookie",
+            "handle": "belgian-hazelnut-cookie",
+            "body_html": "<h2 data-mce-fragment=\"1\">Try out this limited edition cookie packed with hazelnuts and organic Nutella spread!</h2>\n<h3 data-mce-fragment=\"1\">\n<br data-mce-fragment=\"1\">Available for a limited time only!</h3>",
+            "published_at": "2025-06-12T03:57:34-04:00",
+            "created_at": "2025-06-12T03:57:40-04:00",
+            "updated_at": "2025-06-13T11:12:55-04:00",
+            "vendor": "neli-zarkova",
+            "product_type": "",
+            "tags": [],
+            "variants": [
+                {
+                    "id": 55726608875902,
+                    "title": "Default Title",
+                    "option1": "Default Title",
+                    "option2": null,
+                    "option3": null,
+                    "sku": "",
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "5.50",
+                    "grams": 142,
+                    "compare_at_price": null,
+                    "position": 1,
+                    "product_id": 15428342579582,
+                    "created_at": "2025-06-12T03:57:40-04:00",
+                    "updated_at": "2025-06-13T11:12:55-04:00"
+                }
+            ],
+            "images": [
+                {
+                    "id": 76661874557310,
+                    "created_at": "2025-06-12T03:57:40-04:00",
+                    "position": 1,
+                    "updated_at": "2025-06-12T03:57:40-04:00",
+                    "product_id": 15428342579582,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0943/3877/7470/files/BelgianHazelnut_BangCookies.png?v=1749715060",
+                    "width": 780,
+                    "height": 690
+                },
+                {
+                    "id": 76661874590078,
+                    "created_at": "2025-06-12T03:57:40-04:00",
+                    "position": 2,
+                    "updated_at": "2025-06-12T03:57:40-04:00",
+                    "product_id": 15428342579582,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0943/3877/7470/files/BelgianHazelnut_sliced_BangCookies.png?v=1749715060",
+                    "width": 780,
+                    "height": 690
+                }
+            ],
+            "options": [
+                {
+                    "name": "Title",
+                    "position": 1,
+                    "values": [
+                        "Default Title"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 15428341891454,
+            "title": "Better than Oreo cookie",
+            "handle": "better-than-oreo-cookie",
+            "body_html": "<h2 data-mce-fragment=\"1\">Try out this limited edition 'Better than Oreo' cookie.<br data-mce-fragment=\"1\"><br data-mce-fragment=\"1\">\n</h2>\n<h3 data-mce-fragment=\"1\">Available for a limited time only!</h3>",
+            "published_at": "2025-06-12T03:57:26-04:00",
+            "created_at": "2025-06-12T03:57:33-04:00",
+            "updated_at": "2025-06-13T11:12:55-04:00",
+            "vendor": "neli-zarkova",
+            "product_type": "",
+            "tags": [],
+            "variants": [
+                {
+                    "id": 55726608515454,
+                    "title": "Default Title",
+                    "option1": "Default Title",
+                    "option2": null,
+                    "option3": null,
+                    "sku": "",
+                    "requires_shipping": true,
+                    "taxable": false,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "5.75",
+                    "grams": 142,
+                    "compare_at_price": null,
+                    "position": 1,
+                    "product_id": 15428341891454,
+                    "created_at": "2025-06-12T03:57:33-04:00",
+                    "updated_at": "2025-06-13T11:12:55-04:00"
+                }
+            ],
+            "images": [
+                {
+                    "id": 76661870788990,
+                    "created_at": "2025-06-12T03:57:33-04:00",
+                    "position": 1,
+                    "updated_at": "2025-06-12T03:57:33-04:00",
+                    "product_id": 15428341891454,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0943/3877/7470/files/RockyRoadCookie_BangCookies.png?v=1749715053",
+                    "width": 780,
+                    "height": 690
+                },
+                {
+                    "id": 76661870821758,
+                    "created_at": "2025-06-12T03:57:33-04:00",
+                    "position": 2,
+                    "updated_at": "2025-06-12T03:57:33-04:00",
+                    "product_id": 15428341891454,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0943/3877/7470/files/BetterthanOreocookie_sliced_BangCookies.png?v=1749715053",
+                    "width": 780,
+                    "height": 690
+                }
+            ],
+            "options": [
+                {
+                    "name": "Title",
+                    "position": 1,
+                    "values": [
+                        "Default Title"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 15428341203326,
+            "title": "Booze Caramel Sea Salt Chocolate",
+            "handle": "booze-caramel-sea-salt-chocolate",
+            "body_html": "<p data-mce-fragment=\"1\"><span data-mce-fragment=\"1\">Our signature Sea Salt Chocolate Chunk filled with seductively smooth and creamy caramel. One little nibble and you'll surrender to its deep and lingering sensuality.</span></p>\n<p data-mce-fragment=\"1\"><span data-mce-fragment=\"1\"><strong data-mce-fragment=\"1\">SHIPPING BY MAIL NATIONALLY:</strong> Available Monday-Thursday. All orders must be received by 4PM EST to be eligible to be baked and shipped same day. All orders received after 4PM EST will be baked and shipped the following day. </span></p>\n<p data-mce-fragment=\"1\"><span data-mce-fragment=\"1\"> </span><strong data-mce-fragment=\"1\">LOCAL ON DEMAND DELIVERY: </strong>Available Monday-Sunday, 11AM-12AM midnight in the following cities: Jersey City, NJ, Hoboken, NJ, Union City, NJ, Secaucus, NJ and Weehawken, NJ only. More cities coming soon!</p>\n<span data-mce-fragment=\"1\">organic flour, organic cane sugar, organic brown sugar, grass-fed butter, organic dark chocolate, organic milk chocolate, organic eggs, organic caramel, organic corn starch, organic vanilla, sea salt, non-gmo baking powder, and baking soda.</span>",
+            "published_at": "2025-06-12T03:57:19-04:00",
+            "created_at": "2025-06-12T03:57:26-04:00",
+            "updated_at": "2025-06-13T11:12:55-04:00",
+            "vendor": "neli-zarkova",
+            "product_type": "",
+            "tags": [],
+            "variants": [
+                {
+                    "id": 55726608187774,
+                    "title": "Default Title",
+                    "option1": "Default Title",
+                    "option2": null,
+                    "option3": null,
+                    "sku": "",
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "5.50",
+                    "grams": 142,
+                    "compare_at_price": null,
+                    "position": 1,
+                    "product_id": 15428341203326,
+                    "created_at": "2025-06-12T03:57:26-04:00",
+                    "updated_at": "2025-06-13T11:12:55-04:00"
+                }
+            ],
+            "images": [
+                {
+                    "id": 76661865939326,
+                    "created_at": "2025-06-12T03:57:26-04:00",
+                    "position": 1,
+                    "updated_at": "2025-06-12T03:57:26-04:00",
+                    "product_id": 15428341203326,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0943/3877/7470/files/sea_salt_caramel_inside_600x600_3533e5bf-a24d-4605-b70a-88fca80c5eda.png?v=1749715046",
+                    "width": 600,
+                    "height": 600
+                },
+                {
+                    "id": 76661865972094,
+                    "created_at": "2025-06-12T03:57:26-04:00",
+                    "position": 2,
+                    "updated_at": "2025-06-12T03:57:26-04:00",
+                    "product_id": 15428341203326,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0943/3877/7470/files/sea_salt_caramel_600x600_cd133002-ee33-4234-b97b-18b4218b7d54.png?v=1749715046",
+                    "width": 600,
+                    "height": 600
+                }
+            ],
+            "options": [
+                {
+                    "name": "Title",
+                    "position": 1,
+                    "values": [
+                        "Default Title"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 15428340482430,
+            "title": "Butterscotch Sugar Cookie",
+            "handle": "butterscotch-sugar-cookie",
+            "body_html": "<h2 data-mce-fragment=\"1\">Try out this limited edition cookie stuffed with dulce de leche and butterscotch chips.<br data-mce-fragment=\"1\"><br data-mce-fragment=\"1\">Available for a limited time only!</h2>",
+            "published_at": "2025-06-12T03:57:12-04:00",
+            "created_at": "2025-06-12T03:57:18-04:00",
+            "updated_at": "2025-06-13T11:12:55-04:00",
+            "vendor": "neli-zarkova",
+            "product_type": "",
+            "tags": [],
+            "variants": [
+                {
+                    "id": 55726607860094,
+                    "title": "Default Title",
+                    "option1": "Default Title",
+                    "option2": null,
+                    "option3": null,
+                    "sku": "",
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "5.75",
+                    "grams": 142,
+                    "compare_at_price": null,
+                    "position": 1,
+                    "product_id": 15428340482430,
+                    "created_at": "2025-06-12T03:57:18-04:00",
+                    "updated_at": "2025-06-13T11:12:55-04:00"
+                }
+            ],
+            "images": [
+                {
+                    "id": 76661860893054,
+                    "created_at": "2025-06-12T03:57:18-04:00",
+                    "position": 1,
+                    "updated_at": "2025-06-12T03:57:18-04:00",
+                    "product_id": 15428340482430,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0943/3877/7470/files/ButterscotchSugarCookie_BangCookies.png?v=1749715038",
+                    "width": 780,
+                    "height": 690
+                },
+                {
+                    "id": 76661860925822,
+                    "created_at": "2025-06-12T03:57:18-04:00",
+                    "position": 2,
+                    "updated_at": "2025-06-12T03:57:18-04:00",
+                    "product_id": 15428340482430,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0943/3877/7470/files/ButterscotchSugarCookie_sliced_BangCookies.png?v=1749715038",
+                    "width": 780,
+                    "height": 690
+                }
+            ],
+            "options": [
+                {
+                    "name": "Title",
+                    "position": 1,
+                    "values": [
+                        "Default Title"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 15428339728766,
+            "title": "Cereal Cookie",
+            "handle": "cereal-cookie",
+            "body_html": "<h2 data-mce-fragment=\"1\">Try out this limited edition cookie stuffed with fruity cereal and white chocolate.<br data-mce-fragment=\"1\"><br data-mce-fragment=\"1\">\n</h2>\n<h3 data-mce-fragment=\"1\">Available for a limited time only!</h3>",
+            "published_at": "2025-06-12T03:57:05-04:00",
+            "created_at": "2025-06-12T03:57:11-04:00",
+            "updated_at": "2025-06-13T11:12:55-04:00",
+            "vendor": "neli-zarkova",
+            "product_type": "",
+            "tags": [],
+            "variants": [
+                {
+                    "id": 55726607270270,
+                    "title": "Default Title",
+                    "option1": "Default Title",
+                    "option2": null,
+                    "option3": null,
+                    "sku": "",
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "5.75",
+                    "grams": 142,
+                    "compare_at_price": null,
+                    "position": 1,
+                    "product_id": 15428339728766,
+                    "created_at": "2025-06-12T03:57:11-04:00",
+                    "updated_at": "2025-06-13T11:12:55-04:00"
+                }
+            ],
+            "images": [
+                {
+                    "id": 76661856731518,
+                    "created_at": "2025-06-12T03:57:11-04:00",
+                    "position": 1,
+                    "updated_at": "2025-06-12T03:57:11-04:00",
+                    "product_id": 15428339728766,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0943/3877/7470/files/CerealCookie_sliced.png?v=1749715031",
+                    "width": 780,
+                    "height": 690
+                },
+                {
+                    "id": 76661856764286,
+                    "created_at": "2025-06-12T03:57:11-04:00",
+                    "position": 2,
+                    "updated_at": "2025-06-12T03:57:11-04:00",
+                    "product_id": 15428339728766,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0943/3877/7470/files/CerealCookie_BangCookies.png?v=1749715031",
+                    "width": 780,
+                    "height": 690
+                }
+            ],
+            "options": [
+                {
+                    "name": "Title",
+                    "position": 1,
+                    "values": [
+                        "Default Title"
+                    ]
+                }
+            ]
+        }
+    ]
+}

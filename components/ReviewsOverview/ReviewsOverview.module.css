@@ -1,0 +1,35 @@
+.container {
+    width:100%;
+    margin: 2rem auto;
+}
+
+.headingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.reviewContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.p{
+    font-weight:400;
+    font-size: 37px;
+}
+
+@media (max-width: 768px) {
+    .p {
+      font-size: 28px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .p {
+      font-size: 24px;
+    }
+  }
