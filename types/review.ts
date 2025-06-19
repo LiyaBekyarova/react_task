@@ -1,7 +1,7 @@
 export interface Review {
-    id: number;
-    product_id: number;
-    product_title: string;
+    id?: number;
+    product_id?: number;
+    product_title?: string;
     reviewer_name: string;
     email: string; 
     rating: number;
