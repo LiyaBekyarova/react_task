@@ -1,32 +1,15 @@
+import { Review } from "@/types/review";
 import React, { useState, useMemo, useEffect } from "react";
-
-export interface Review {
-  id: number;
-  product_id: number;
-  product_title: string;
-  reviewer_name: string;
-  email: string; // Optional field
-  rating: number;
-  review_title: string; // Optional field
-  comment: string;
-  image_url?: string; // Optional field
-  date: string;
-  likes: number;
-  dislikes: number;
-  userReaction?: "liked" | "disliked" | null; // To track user's local reaction
-}
-
 interface AllReviewsProps {
   reviews: Review[];
   onLeaveReview: () => void;
   onReviewReaction: (updatedReview: Review) => void;
-
 }
 
 const AllReviews: React.FC<AllReviewsProps> = ({
   reviews: initialReviews,
   onLeaveReview,
-  onReviewReaction
+  onReviewReaction,
 }) => {
   // State for the reviews, allowing local interaction (likes/dislikes)
   // Ensure reviews is always an array, even if initialReviews is null/undefined
@@ -46,8 +29,8 @@ const AllReviews: React.FC<AllReviewsProps> = ({
     // Only update if initialReviews actually changed, to avoid infinite loops
     // This comparison is shallow, but usually sufficient for array identity
     if (initialReviews !== reviews) {
-        setReviews(initialReviews || []);
-        setCurrentPage(1);
+      setReviews(initialReviews || []);
+      setCurrentPage(1);
     }
   }, [initialReviews, reviews]); // Added 'reviews' to dependency to avoid re-setting if it's the same array
 
@@ -73,7 +56,8 @@ const AllReviews: React.FC<AllReviewsProps> = ({
             updatedReview.likes += 1;
             updatedReview.userReaction = "liked";
           }
-        } else { // reactionType === "dislike"
+        } else {
+          // reactionType === "dislike"
           if (updatedReview.userReaction === "disliked") {
             updatedReview.dislikes = Math.max(0, updatedReview.dislikes - 1);
             updatedReview.userReaction = null;
@@ -139,7 +123,9 @@ const AllReviews: React.FC<AllReviewsProps> = ({
     indexOfLastReview
   );
 
-  const totalPages = Math.ceil(filteredAndSortedReviews.length / reviewsPerPage);
+  const totalPages = Math.ceil(
+    filteredAndSortedReviews.length / reviewsPerPage
+  );
 
   // Function to change page
   const paginate = (pageNumber: number) => {
@@ -150,7 +136,6 @@ const AllReviews: React.FC<AllReviewsProps> = ({
   useEffect(() => {
     setCurrentPage(1);
   }, [filterRating, sortOption]);
-
 
   if (!reviews || reviews.length === 0) {
     return (
@@ -594,7 +579,8 @@ const AllReviews: React.FC<AllReviewsProps> = ({
                   backgroundColor:
                     currentPage === totalPages ? "#e0e0e0" : "#a34a2e",
                   color: currentPage === totalPages ? "#666" : "white",
-                  cursor: currentPage === totalPages ? "not-allowed" : "pointer",
+                  cursor:
+                    currentPage === totalPages ? "not-allowed" : "pointer",
                   fontSize: "0.9rem",
                   fontWeight: "bold",
                 }}

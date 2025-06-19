@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Upload, Star } from 'lucide-react'; // Upload icon can now be removed if not used elsewhere
+import { X, Star } from 'lucide-react'; // Upload icon can now be removed if not used elsewhere
 import styles from './ReviewFormModal.module.css';
 import { Review } from '@/types/review'; // Import your centralized Review type
 
