@@ -26,7 +26,7 @@ export const CookieGallery = ({ images = [] }: { images?: images[] }) => {
     );
   }
   return (
-    <>
+    <div>
       <div className={styles.imageContainer}>
         <Image 
           src={images[0]?.src} 
@@ -48,6 +48,6 @@ export const CookieGallery = ({ images = [] }: { images?: images[] }) => {
             className={styles.img}
           />
         ))}
-    </>
+    </div>
   );
 };

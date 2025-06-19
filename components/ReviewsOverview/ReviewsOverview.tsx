@@ -2,31 +2,20 @@ import React, { useState } from "react";
 import styles from "./ReviewsOverview.module.css";
 import AllReviews from "../AllReviews/AllReviews";
 import ReviewModal from "../ReviewFormModal/ReviewFormModal";
+import { Review } from "@/types/review";
 
-export interface Review {
-  id: number;
-  product_id: number;
-  product_title: string;
-  reviewer_name: string;
-  email: string;
-  rating: number;
-  review_title: string;
-  comment: string;
-  image_url?: string;
-  date: string;
-  likes: number;
-  dislikes: number;
-  userReaction?: "liked" | "disliked" | null;
-}
+
 
 interface ReviewsOverviewProps {
   reviews: Review[];
+  onReviewReaction: (updatedReview: Review) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onReviewSubmit: (reviewData: any) => void;
 }
 export const ReviewsOverview = ({
   reviews,
   onReviewSubmit,
+  onReviewReaction
 }: ReviewsOverviewProps) => {
   const [showModal, setShowModal] = useState(false);
 
@@ -37,6 +26,7 @@ export const ReviewsOverview = ({
       </div>
       <div className={styles.reviewContainer}>
         <AllReviews
+          onReviewReaction={onReviewReaction}
           reviews={reviews}
           onLeaveReview={() => setShowModal(true)}
         />

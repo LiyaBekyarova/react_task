@@ -1,12 +1,13 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
+
 export interface Review {
   id: number;
   product_id: number;
   product_title: string;
   reviewer_name: string;
-  email?: string; // Optional field
+  email: string; // Optional field
   rating: number;
-  review_title?: string; // Optional field
+  review_title: string; // Optional field
   comment: string;
   image_url?: string; // Optional field
   date: string;
@@ -18,69 +19,85 @@ export interface Review {
 interface AllReviewsProps {
   reviews: Review[];
   onLeaveReview: () => void;
+  onReviewReaction: (updatedReview: Review) => void;
+
 }
 
 const AllReviews: React.FC<AllReviewsProps> = ({
   reviews: initialReviews,
   onLeaveReview,
+  onReviewReaction
 }) => {
   // State for the reviews, allowing local interaction (likes/dislikes)
-  const [reviews, setReviews] = useState<Review[]>(initialReviews);
+  // Ensure reviews is always an array, even if initialReviews is null/undefined
+  const [reviews, setReviews] = useState<Review[]>(initialReviews || []);
   // State for filtering by rating
   const [filterRating, setFilterRating] = useState<number | null>(null); // null for no filter, 1-5 for specific rating
   // State for sorting option
   const [sortOption, setSortOption] = useState<string>("highest-rating"); // Default sort
+
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const reviewsPerPage: number = 10; // Number of reviews to display per page
+
+  // Update reviews state when initialReviews prop changes (e.g., after a new review is submitted)
+  // Also reset to first page when initialReviews change or filters/sort options change
+  useEffect(() => {
+    // Only update if initialReviews actually changed, to avoid infinite loops
+    // This comparison is shallow, but usually sufficient for array identity
+    if (initialReviews !== reviews) {
+        setReviews(initialReviews || []);
+        setCurrentPage(1);
+    }
+  }, [initialReviews, reviews]); // Added 'reviews' to dependency to avoid re-setting if it's the same array
 
   // Handler for liking/disliking a review
   const handleReaction = (
     reviewId: number,
     reactionType: "like" | "dislike"
   ) => {
-    setReviews((prevReviews) =>
-      prevReviews.map((review) => {
+    setReviews((prevReviews) => {
+      const updatedReviews = prevReviews.map((review) => {
         if (review.id !== reviewId) return review;
 
-        // Clone the review to avoid direct state mutation issues
-        const updatedReview = { ...review };
+        const updatedReview = { ...review }; // Create a copy
 
         if (reactionType === "like") {
           if (updatedReview.userReaction === "liked") {
-            // User unlikes
             updatedReview.likes = Math.max(0, updatedReview.likes - 1);
             updatedReview.userReaction = null;
           } else {
-            // User likes
             if (updatedReview.userReaction === "disliked") {
-              // User changes from disliked to liked
               updatedReview.dislikes = Math.max(0, updatedReview.dislikes - 1);
             }
             updatedReview.likes += 1;
             updatedReview.userReaction = "liked";
           }
-        } else {
-          // reactionType === "dislike"
+        } else { // reactionType === "dislike"
           if (updatedReview.userReaction === "disliked") {
-            // User undislikes
             updatedReview.dislikes = Math.max(0, updatedReview.dislikes - 1);
             updatedReview.userReaction = null;
           } else {
-            // User dislikes
             if (updatedReview.userReaction === "liked") {
-              // User changes from liked to disliked
               updatedReview.likes = Math.max(0, updatedReview.likes - 1);
             }
             updatedReview.dislikes += 1;
             updatedReview.userReaction = "disliked";
           }
         }
+
+        // --- IMPORTANT CHANGE: Call the prop function with the updated review ---
+        onReviewReaction(updatedReview);
+
         return updatedReview;
-      })
-    );
+      });
+      return updatedReviews;
+    });
   };
 
   // Memoize filtered and sorted reviews to prevent unnecessary re-renders
-  const displayReviews = useMemo(() => {
-    let filtered = reviews;
+  const filteredAndSortedReviews = useMemo(() => {
+    let filtered = reviews; // 'reviews' is guaranteed to be an array due to useState initialization
 
     // Apply rating filter
     if (filterRating !== null) {
@@ -112,6 +129,28 @@ const AllReviews: React.FC<AllReviewsProps> = ({
     }
     return sorted;
   }, [reviews, filterRating, sortOption]);
+
+  // Pagination logic
+  const indexOfLastReview = currentPage * reviewsPerPage;
+  const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
+  // Ensure that slice is called on a valid array
+  const currentReviews = filteredAndSortedReviews.slice(
+    indexOfFirstReview,
+    indexOfLastReview
+  );
+
+  const totalPages = Math.ceil(filteredAndSortedReviews.length / reviewsPerPage);
+
+  // Function to change page
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  // Effect to reset page number when filters/sort change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filterRating, sortOption]);
+
 
   if (!reviews || reviews.length === 0) {
     return (
@@ -147,7 +186,7 @@ const AllReviews: React.FC<AllReviewsProps> = ({
     );
   }
 
-  const totalReviews = reviews.length;
+  const totalReviews = reviews.length; // Total count of all reviews before filtering/sorting
   const sumRatings = reviews.reduce((acc, review) => acc + review.rating, 0);
   const averageRating =
     totalReviews > 0 ? (sumRatings / totalReviews).toFixed(1) : "0.0";
@@ -202,7 +241,8 @@ const AllReviews: React.FC<AllReviewsProps> = ({
         ))}
         {hasHalfStar && (
           <span style={{ color: "gold", fontSize: "1.5rem" }}>★</span>
-        )} {/* Use gold for half star if it's part of the rating */}
+        )}{" "}
+        {/* Use gold for half star if it's part of the rating */}
         {[...Array(emptyStars)].map((_, i) => (
           <span
             key={`empty-${i}`}
@@ -218,14 +258,11 @@ const AllReviews: React.FC<AllReviewsProps> = ({
   return (
     <div
       style={{
-       
         padding: "20px",
-        border: "1px solid #e0e0e0",
         borderRadius: "8px",
         maxWidth: "1200px",
         minWidth: "900px",
         margin: "20px auto",
-        boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
       }}
     >
       <div
@@ -272,12 +309,12 @@ const AllReviews: React.FC<AllReviewsProps> = ({
                   alignItems: "center",
                   gap: "10px",
                   marginBottom: "5px",
-                  cursor: "pointer", // Make it clickable for filtering
-                  fontWeight: filterRating === star ? "bold" : "normal", // Highlight selected filter
+                  cursor: "pointer",
+                  fontWeight: filterRating === star ? "bold" : "normal",
                 }}
                 onClick={() =>
                   setFilterRating(filterRating === star ? null : star)
-                } // Toggle filter
+                }
               >
                 {renderStaticStars(star)}
                 <div
@@ -396,105 +433,177 @@ const AllReviews: React.FC<AllReviewsProps> = ({
         </div>
       </div>
 
-      {displayReviews.length === 0 ? (
+      {filteredAndSortedReviews.length === 0 ? (
         <p style={{ textAlign: "center", color: "#666", marginTop: "20px" }}>
           No reviews match your current filter/sort selection.
         </p>
       ) : (
-        displayReviews.map((review, index) => (
-          <div
-            key={review.id || `review-${review.product_id}-${index}`}
-            style={{
-              borderBottom: "1px solid #eee",
-              paddingBottom: "15px",
-              marginBottom: "15px",
-            }}
-          >
-            {review.review_title && (
-              <h4 style={{ margin: "5px 0", color: "#333" }}>
-                {review.review_title}
-              </h4>
-            )}
+        <>
+          {currentReviews.map((review, index) => (
             <div
+              key={review.id || `review-${review.product_id}-${index}`}
               style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "5px",
+                borderBottom: "1px solid #eee",
+                paddingBottom: "15px",
+                marginBottom: "15px",
               }}
             >
-              {renderDynamicStars(review.rating)}
-              {review.product_title && (
-                <span style={{ marginLeft: "10px", fontWeight: "bold" }}>
-                  {review.product_title}
-                </span>
+              {review.review_title && (
+                <h4 style={{ margin: "5px 0", color: "#333" }}>
+                  {review.review_title}
+                </h4>
               )}
-            </div>
-            <p style={{ margin: "5px 0", color: "#333" }}>
-              &quot;{review.comment}&quot;
-            </p>
-            {review.image_url && (
-              <div style={{ marginTop: "10px" }}>
-                <img
-                  src={review.image_url}
-                  alt="Review"
-                  style={{
-                    maxWidth: "100px",
-                    maxHeight: "100px",
-                    borderRadius: "5px",
-                    objectFit: "cover",
-                  }}
-                />
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: "5px",
+                }}
+              >
+                {renderDynamicStars(review.rating)}
+                {review.product_title && (
+                  <span style={{ marginLeft: "10px", fontWeight: "bold" }}>
+                    {review.product_title}
+                  </span>
+                )}
               </div>
-            )}
+              <p style={{ margin: "5px 0", color: "#333" }}>
+                &quot;{review.comment}&quot;
+              </p>
+              {review.image_url && (
+                <div style={{ marginTop: "10px" }}>
+                  <img
+                    src={review.image_url}
+                    alt="Review"
+                    style={{
+                      maxWidth: "100px",
+                      maxHeight: "100px",
+                      borderRadius: "5px",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+              )}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginTop: "10px",
+                  flexWrap: "wrap",
+                  gap: "10px",
+                }}
+              >
+                <div style={{ fontSize: "0.9em", color: "#888" }}>
+                  Reviewed by {review.reviewer_name} on {review.date}
+                </div>
+                <div style={{ display: "flex", gap: "15px" }}>
+                  <button
+                    onClick={() => handleReaction(review.id, "like")}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px",
+                      color:
+                        review.userReaction === "liked" ? "#2e7d32" : "#666",
+                    }}
+                  >
+                    <span style={{ fontSize: "1.2rem" }}>👍</span>
+                    <span>{review.likes}</span>
+                  </button>
+                  <button
+                    onClick={() => handleReaction(review.id, "dislike")}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px",
+                      color:
+                        review.userReaction === "disliked" ? "#d32f2f" : "#666",
+                    }}
+                  >
+                    <span style={{ fontSize: "1.2rem" }}>👎</span>
+                    <span>{review.dislikes}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
             <div
               style={{
                 display: "flex",
-                justifyContent: "space-between",
+                justifyContent: "center",
                 alignItems: "center",
-                marginTop: "10px",
-                flexWrap: "wrap",
+                marginTop: "20px",
                 gap: "10px",
               }}
             >
-              <div style={{ fontSize: "0.9em", color: "#888" }}>
-                Reviewed by {review.reviewer_name} on {review.date}
-              </div>
-              <div style={{ display: "flex", gap: "15px" }}>
+              <button
+                onClick={() => paginate(currentPage - 1)}
+                disabled={currentPage === 1}
+                style={{
+                  padding: "8px 15px",
+                  borderRadius: "5px",
+                  border: "1px solid #a34a2e",
+                  backgroundColor: currentPage === 1 ? "#e0e0e0" : "#a34a2e",
+                  color: currentPage === 1 ? "#666" : "white",
+                  cursor: currentPage === 1 ? "not-allowed" : "pointer",
+                  fontSize: "0.9rem",
+                  fontWeight: "bold",
+                }}
+              >
+                Previous
+              </button>
+              {[...Array(totalPages)].map((_, index) => (
                 <button
-                  onClick={() => handleReaction(review.id, "like")}
+                  key={index + 1}
+                  onClick={() => paginate(index + 1)}
                   style={{
-                    background: "none",
-                    border: "none",
+                    padding: "8px 15px",
+                    borderRadius: "5px",
+                    border:
+                      currentPage === index + 1
+                        ? "1px solid #a34a2e"
+                        : "1px solid #ccc",
+                    backgroundColor:
+                      currentPage === index + 1 ? "#a34a2e" : "white",
+                    color: currentPage === index + 1 ? "white" : "#a34a2e",
                     cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                    color: review.userReaction === "liked" ? "#2e7d32" : "#666",
+                    fontSize: "0.9rem",
+                    fontWeight: "bold",
                   }}
                 >
-                  <span style={{ fontSize: "1.2rem" }}>👍</span>
-                  <span>{review.likes}</span>
+                  {index + 1}
                 </button>
-                <button
-                  onClick={() => handleReaction(review.id, "dislike")}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                    color:
-                      review.userReaction === "disliked" ? "#d32f2f" : "#666",
-                  }}
-                >
-                  <span style={{ fontSize: "1.2rem" }}>👎</span>
-                  <span>{review.dislikes}</span>
-                </button>
-              </div>
+              ))}
+              <button
+                onClick={() => paginate(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                style={{
+                  padding: "8px 15px",
+                  borderRadius: "5px",
+                  border: "1px solid #a34a2e",
+                  backgroundColor:
+                    currentPage === totalPages ? "#e0e0e0" : "#a34a2e",
+                  color: currentPage === totalPages ? "#666" : "white",
+                  cursor: currentPage === totalPages ? "not-allowed" : "pointer",
+                  fontSize: "0.9rem",
+                  fontWeight: "bold",
+                }}
+              >
+                Next
+              </button>
             </div>
-          </div>
-        ))
+          )}
+        </>
       )}
     </div>
   );

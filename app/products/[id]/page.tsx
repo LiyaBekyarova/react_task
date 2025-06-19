@@ -4,6 +4,7 @@ import { ImageWithDesc } from "@/components/ImageWithDesc/ImageWithDesc";
 import { ReviewsOverview } from "@/components/ReviewsOverview/ReviewsOverview";
 import productsData from "@/constants/product.json";
 import styles from "./page.module.css";
+import { Review } from "@/types/review";
 
 export default function Page({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -100,23 +101,76 @@ export default function Page({ params }: { params: { id: string } }) {
     );
   }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleReviewSubmit = (reviewData: any) => {
-    const currentReviews = JSON.parse(localStorage.getItem("reviews") || "[]");
-    const newReview = {
+const handleReviewSubmit = (reviewData: any) => {
+  const currentReviews = JSON.parse(localStorage.getItem("reviews") || "[]");
+  let updatedReviews;
+  let newReviewAddedOrUpdated = null;
+
+  if (reviewData.id) {
+    // This is an update to an existing review
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
+    updatedReviews = currentReviews.map((review: any) => {
+      if (review.id === reviewData.id) {
+        newReviewAddedOrUpdated = {
+          ...review, // Keep existing fields like product_id, date, etc. if not provided in reviewData
+          ...reviewData,
+          date: new Date().toISOString(), // Update the date to show when it was last modified
+        };
+        return newReviewAddedOrUpdated;
+      }
+      return review;
+    });
+  } else {
+    // This is a brand new review
+    newReviewAddedOrUpdated = {
       ...reviewData,
-      id: Date.now(),
+      id: Date.now(), // Unique ID for the new review
       product_id: Number(productData.id),
       date: new Date().toISOString(),
-
     };
-    const updatedReviews = [...currentReviews, newReview];
-    localStorage.setItem("reviews", JSON.stringify(updatedReviews));
-    setProductReviews(prev => [...prev, newReview]);
-  };
+    updatedReviews = [...currentReviews, newReviewAddedOrUpdated];
+  }
+
+  localStorage.setItem("reviews", JSON.stringify(updatedReviews));
+
+  // Update the component's state
+  if (newReviewAddedOrUpdated) {
+    // Filter productReviews to only include reviews for the current product
+    const productId = Number(productData.id);
+    const filteredProductReviews = updatedReviews.filter(
+      //eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (r: any) => r.product_id === productId
+    );
+    setProductReviews(filteredProductReviews);
+  }
+};
+
+
+const handleReviewReaction = (updatedReview: Review) => {
+  // 1. Get ALL reviews from localStorage
+  const allReviewsFromLocalStorage: Review[] = JSON.parse(localStorage.getItem("reviews") || "[]");
+
+  // 2. Find the specific review and update it in the full list
+  const updatedAllReviews = allReviewsFromLocalStorage.map((r) =>
+    r.id === updatedReview.id ? updatedReview : r
+  );
+
+  // 3. Save the full updated list back to localStorage
+  localStorage.setItem("reviews", JSON.stringify(updatedAllReviews));
+
+  // 4. Update the component's state (productReviews)
+  // This is crucial for immediate UI update in the current view
+  setProductReviews((prevProductReviews) =>
+    prevProductReviews.map((r) =>
+      r.id === updatedReview.id ? updatedReview : r
+    )
+  );
+};
   return (
     <div className={styles.container}>
       <ImageWithDesc product={productData} />
-      <ReviewsOverview reviews={productReviews} onReviewSubmit={handleReviewSubmit} />
+      <ReviewsOverview reviews={productReviews} onReviewSubmit={handleReviewSubmit} onReviewReaction={handleReviewReaction}/>
+      
     </div>
   );
 }
