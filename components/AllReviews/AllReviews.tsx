@@ -484,7 +484,7 @@ const AllReviews: React.FC<AllReviewsProps> = ({
                 </div>
                 <div style={{ display: "flex", gap: "15px" }}>
                   <button
-                    onClick={() => handleReaction(review.id, "like")}
+                    onClick={() => handleReaction(review.id!, "like")}
                     style={{
                       background: "none",
                       border: "none",
@@ -500,7 +500,7 @@ const AllReviews: React.FC<AllReviewsProps> = ({
                     <span>{review.likes}</span>
                   </button>
                   <button
-                    onClick={() => handleReaction(review.id, "dislike")}
+                    onClick={() => handleReaction(review.id!, "dislike")}
                     style={{
                       background: "none",
                       border: "none",
