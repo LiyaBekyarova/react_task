@@ -100,48 +100,45 @@ export default function Page({ params }: { params: { id: string } }) {
       </div>
     );
   }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const handleReviewSubmit = (reviewData: any) => {
-  const currentReviews = JSON.parse(localStorage.getItem("reviews") || "[]");
-  let updatedReviews;
-  let newReviewAddedOrUpdated = null;
-
-  if (reviewData.id) {
-    // This is an update to an existing review
-    //eslint-disable-next-line @typescript-eslint/no-explicit-any
-    updatedReviews = currentReviews.map((review: any) => {
-      if (review.id === reviewData.id) {
-        newReviewAddedOrUpdated = {
-          ...review, // Keep existing fields like product_id, date, etc. if not provided in reviewData
-          ...reviewData,
-          date: new Date().toISOString(), // Update the date to show when it was last modified
-        };
-        return newReviewAddedOrUpdated;
-      }
-      return review;
-    });
-  } else {
-    // This is a brand new review
-    newReviewAddedOrUpdated = {
+const handleReviewSubmit = (reviewData: Review) => {
+  try {
+    console.log('Received review data:', reviewData);
+    
+    const currentReviews = JSON.parse(localStorage.getItem("reviews") || "[]");
+    const now = new Date();
+    const formattedDate = now.toISOString().split('T')[0];
+    
+    // Create a new review with all required fields
+    const newReview: Review = {
       ...reviewData,
-      id: Date.now(), // Unique ID for the new review
+      id: Date.now(),
       product_id: Number(productData.id),
-      date: new Date().toISOString(),
+      product_title: productData.title,
+      date: formattedDate,
+      likes: 0,
+      dislikes: 0,
+      userReaction: null
     };
-    updatedReviews = [...currentReviews, newReviewAddedOrUpdated];
-  }
-
-  localStorage.setItem("reviews", JSON.stringify(updatedReviews));
-
-  // Update the component's state
-  if (newReviewAddedOrUpdated) {
-    // Filter productReviews to only include reviews for the current product
+    
+    console.log('New review to be saved:', newReview);
+    
+    // Add the new review to the beginning of the array (most recent first)
+    const updatedReviews = [newReview, ...currentReviews];
+    
+    // Save to localStorage
+    localStorage.setItem("reviews", JSON.stringify(updatedReviews));
+    
+    // Update the component's state with reviews for the current product only
     const productId = Number(productData.id);
     const filteredProductReviews = updatedReviews.filter(
-      //eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (r: any) => r.product_id === productId
+      (r: Review) => r.product_id === productId
     );
+    
+    console.log('Updated product reviews:', filteredProductReviews);
     setProductReviews(filteredProductReviews);
+    
+  } catch (error) {
+    console.error('Error submitting review:', error);
   }
 };
 

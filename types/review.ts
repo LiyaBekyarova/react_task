@@ -3,7 +3,7 @@ export interface Review {
     product_id?: number;
     product_title?: string;
     reviewer_name: string;
-    email: string; 
+    email: string; // Required field
     rating: number;
     review_title?: string;
     comment: string;

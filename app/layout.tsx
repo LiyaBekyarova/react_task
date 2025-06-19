@@ -1,11 +1,16 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import "./globals.css";
+import "./globals.css"; // Ensure this import is there
 
 const montserrat = Montserrat({
   subsets: ["latin"],
   display: 'swap',
-  variable: '--font-montserrat',
+  variable: '--font-montserrat', // THIS IS KEY for CSS variable
+  weight: ['300', '400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  preload: true,
+  fallback: ['system-ui', 'sans-serif']
 });
 
 export const metadata: Metadata = {
@@ -20,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserrat.className} antialiased`}>
+      <body className={`${montserrat.className} antialiased`}> 
         {children}
       </body>
     </html>

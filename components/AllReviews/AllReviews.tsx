@@ -11,30 +11,20 @@ const AllReviews: React.FC<AllReviewsProps> = ({
   onLeaveReview,
   onReviewReaction,
 }) => {
-  // State for the reviews, allowing local interaction (likes/dislikes)
-  // Ensure reviews is always an array, even if initialReviews is null/undefined
   const [reviews, setReviews] = useState<Review[]>(initialReviews || []);
-  // State for filtering by rating
-  const [filterRating, setFilterRating] = useState<number | null>(null); // null for no filter, 1-5 for specific rating
-  // State for sorting option
-  const [sortOption, setSortOption] = useState<string>("highest-rating"); // Default sort
+  const [filterRating, setFilterRating] = useState<number | null>(null);
+  const [sortOption, setSortOption] = useState<string>("highest-rating");
 
-  // Pagination states
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const reviewsPerPage: number = 10; // Number of reviews to display per page
+  const reviewsPerPage: number = 10;
 
-  // Update reviews state when initialReviews prop changes (e.g., after a new review is submitted)
-  // Also reset to first page when initialReviews change or filters/sort options change
   useEffect(() => {
-    // Only update if initialReviews actually changed, to avoid infinite loops
-    // This comparison is shallow, but usually sufficient for array identity
     if (initialReviews !== reviews) {
       setReviews(initialReviews || []);
       setCurrentPage(1);
     }
-  }, [initialReviews, reviews]); // Added 'reviews' to dependency to avoid re-setting if it's the same array
+  }, [initialReviews, reviews]);
 
-  // Handler for liking/disliking a review
   const handleReaction = (
     reviewId: number,
     reactionType: "like" | "dislike"
@@ -43,7 +33,7 @@ const AllReviews: React.FC<AllReviewsProps> = ({
       const updatedReviews = prevReviews.map((review) => {
         if (review.id !== reviewId) return review;
 
-        const updatedReview = { ...review }; // Create a copy
+        const updatedReview = { ...review }; 
 
         if (reactionType === "like") {
           if (updatedReview.userReaction === "liked") {
@@ -57,7 +47,6 @@ const AllReviews: React.FC<AllReviewsProps> = ({
             updatedReview.userReaction = "liked";
           }
         } else {
-          // reactionType === "dislike"
           if (updatedReview.userReaction === "disliked") {
             updatedReview.dislikes = Math.max(0, updatedReview.dislikes - 1);
             updatedReview.userReaction = null;
@@ -70,7 +59,6 @@ const AllReviews: React.FC<AllReviewsProps> = ({
           }
         }
 
-        // --- IMPORTANT CHANGE: Call the prop function with the updated review ---
         onReviewReaction(updatedReview);
 
         return updatedReview;
@@ -79,17 +67,14 @@ const AllReviews: React.FC<AllReviewsProps> = ({
     });
   };
 
-  // Memoize filtered and sorted reviews to prevent unnecessary re-renders
   const filteredAndSortedReviews = useMemo(() => {
-    let filtered = reviews; // 'reviews' is guaranteed to be an array due to useState initialization
+    let filtered = reviews;
 
-    // Apply rating filter
     if (filterRating !== null) {
       filtered = filtered.filter((review) => review.rating === filterRating);
     }
 
-    // Apply sorting
-    let sorted = [...filtered]; // Create a shallow copy to sort
+    let sorted = [...filtered];
 
     switch (sortOption) {
       case "highest-rating":
@@ -99,25 +84,21 @@ const AllReviews: React.FC<AllReviewsProps> = ({
         sorted.sort((a, b) => a.rating - b.rating);
         break;
       case "only-pictures":
-        // This option filters first, then sorts by highest rating among those with pictures
         sorted = sorted.filter((review) => review.image_url);
-        sorted.sort((a, b) => b.rating - a.rating); // Secondary sort for "Only Pictures"
+        sorted.sort((a, b) => b.rating - a.rating); 
         break;
       case "most-helpful":
         sorted.sort((a, b) => b.likes - a.likes);
         break;
-      // Default case handled by initial sort or can be explicitly defined
       default:
-        sorted.sort((a, b) => b.rating - a.rating); // Default to highest rating
+        sorted.sort((a, b) => b.rating - a.rating); 
         break;
     }
     return sorted;
   }, [reviews, filterRating, sortOption]);
 
-  // Pagination logic
   const indexOfLastReview = currentPage * reviewsPerPage;
   const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
-  // Ensure that slice is called on a valid array
   const currentReviews = filteredAndSortedReviews.slice(
     indexOfFirstReview,
     indexOfLastReview
@@ -127,12 +108,9 @@ const AllReviews: React.FC<AllReviewsProps> = ({
     filteredAndSortedReviews.length / reviewsPerPage
   );
 
-  // Function to change page
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
-
-  // Effect to reset page number when filters/sort change
   useEffect(() => {
     setCurrentPage(1);
   }, [filterRating, sortOption]);
@@ -171,7 +149,7 @@ const AllReviews: React.FC<AllReviewsProps> = ({
     );
   }
 
-  const totalReviews = reviews.length; // Total count of all reviews before filtering/sorting
+  const totalReviews = reviews.length;
   const sumRatings = reviews.reduce((acc, review) => acc + review.rating, 0);
   const averageRating =
     totalReviews > 0 ? (sumRatings / totalReviews).toFixed(1) : "0.0";
@@ -241,34 +219,10 @@ const AllReviews: React.FC<AllReviewsProps> = ({
   };
 
   return (
-    <div
-      style={{
-        padding: "20px",
-        borderRadius: "8px",
-        maxWidth: "1200px",
-        minWidth: "900px",
-        margin: "20px auto",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-start",
-          marginBottom: "20px",
-          flexWrap: "wrap",
-          gap: "20px",
-        }}
-      >
-        <div
-          style={{
-            flex: "0 0 auto",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+    <div className="all-reviews-wrapper">
+    <div className="all-reviews-header">
+      <div className="rating-summary">
+        <div className="rating-stars">
             {renderDynamicStars(parseFloat(averageRating))}
             <span style={{ fontSize: "1.8rem", fontWeight: "bold" }}>
               {averageRating}
@@ -279,9 +233,7 @@ const AllReviews: React.FC<AllReviewsProps> = ({
           </div>
         </div>
 
-        <div
-          style={{ flex: "1 1 400px", maxWidth: "400px", minWidth: "250px" }}
-        >
+        <div className="rating-breakdown">
           {[5, 4, 3, 2, 1].map((star) => {
             const count = ratingCounts[star];
             const percentage =
@@ -520,7 +472,6 @@ const AllReviews: React.FC<AllReviewsProps> = ({
             </div>
           ))}
 
-          {/* Pagination Controls */}
           {totalPages > 1 && (
             <div
               style={{

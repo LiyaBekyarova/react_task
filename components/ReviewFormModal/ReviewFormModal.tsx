@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { X, Star } from 'lucide-react'; // Upload icon can now be removed if not used elsewhere
+import { X, Star } from 'lucide-react';
 import styles from './ReviewFormModal.module.css';
-import { Review } from '@/types/review'; // Import your centralized Review type
+import { Review } from '@/types/review';
 
 interface ReviewModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (reviewData: Review) => void; // Use the imported Review type here
+  onSubmit: (reviewData: Review) => void;
   productName?: string;
-  productId?: number; // Include productId as it's passed from page.tsx
+  productId?: number;
 }
 
 const ReviewModal: React.FC<ReviewModalProps> = ({
@@ -16,25 +16,24 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
   onClose,
   onSubmit,
   productName = "Product",
-  productId // Destructure productId
+  productId
 }) => {
-  // Initialize formData with the imported Review type
-  // Set optional properties to undefined if not provided initially
   const [formData, setFormData] = useState<Review>({
     reviewer_name: '',
     email: '',
     rating: 0,
     review_title: '',
     comment: '',
-    // image_url: undefined, // Commented out image_url as it's not being used for submission
-    date: '', // Will be filled on submit
+    date: '', // Ще се запълни при submit
     likes: 0,
     dislikes: 0,
-    userReaction: null, // Ensure this matches your Review type (if optional, null is fine)
-    // image: undefined, // Commented out image as it's not being used for submission
+    userReaction: null,
+    // Тези са необходими за Review типа, но се задават при submit или са по default
+    id: 0, // placeholder, will be updated on submit
+    product_id: productId || 0, // Ensure productId is used, default to 0 if undefined
+    product_title: productName,
   });
   const [hoveredStar, setHoveredStar] = useState(0);
-  // const [dragActive, setDragActive] = useState(false); // No longer needed if drag/drop is commented out
 
   if (!isOpen) return null;
 
@@ -47,77 +46,45 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
     setFormData(prev => ({ ...prev, rating }));
   };
 
-  // COMMENTED OUT ALL IMAGE UPLOAD RELATED FUNCTIONS
-  /*
-  const handleFileUpload = (file: File) => {
-    if (file && file.type.startsWith('image/')) {
-      setFormData(prev => ({ ...prev, image: file }));
-    }
-  };
-
-  const handleDrag = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
-      setDragActive(true);
-    } else if (e.type === "dragleave") {
-      setDragActive(false);
-    }
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      handleFileUpload(e.dataTransfer.files[0]);
-    }
-  };
-  */
-
   const handleSubmit = () => {
-    // Only proceed if form is valid and productId is available
+    // Проверка за валидация
     if (isFormValid && productId !== undefined) {
       const newReview: Review = {
-        // Only include properties from formData that are part of the Review interface
-        // and are actually being collected by the form.
-        reviewer_name: formData.reviewer_name,
-        email: formData.email,
+        reviewer_name: formData.reviewer_name.trim(),
+        email: formData.email.trim(),
         rating: formData.rating,
-        review_title: formData.review_title,
-        comment: formData.comment,
-        date: new Date().toISOString().split('T')[0], // Format date
-        likes: 0, // Initial likes
-        dislikes: 0, // Initial dislikes
-        userReaction: null, // Initial user reaction state
-
-        // These properties are required by Review but generated/assigned on submit
-        // Make sure your src/types/review.ts has them as OPTIONAL (id?, product_id?, product_title?)
-        // OR provide placeholder values if they are NOT optional
-        id: Date.now(), // Simple ID generation for dummy data
-        product_id: productId, // Assign from props
-        product_title: productName || '', // Assign from props
-
-        // Image related properties are not set here as per request
-        // image_url: undefined, // Explicitly set to undefined or omit
-        // image: undefined // Explicitly set to undefined or omit
+        comment: formData.comment.trim(),
+        date: new Date().toISOString().split('T')[0], // Форматиране на датата като YYYY-MM-DD
+        likes: 0,
+        dislikes: 0,
+        userReaction: null,
+        id: Date.now(), // Генериране на уникално ID
+        product_id: productId, // Използване на productId от props
+        product_title: productName,
       };
 
-      onSubmit(newReview); // Pass the fully formed Review object
+      if (formData.review_title && formData.review_title.trim()) {
+        newReview.review_title = formData.review_title.trim();
+      }
+      
+      console.log('Submitting review:', newReview);
 
-      // Reset form data after submission
+      onSubmit(newReview);
+
+      // Нулиране на формата след изпращане
       setFormData({
         reviewer_name: '',
         email: '',
         rating: 0,
         review_title: '',
         comment: '',
-        // image_url: undefined, // No longer used
         date: '',
         likes: 0,
         dislikes: 0,
         userReaction: null,
-        // image: undefined // No longer used
+        id: 0,
+        product_id: productId || 0,
+        product_title: productName,
       });
       onClose();
     } else {
@@ -125,46 +92,58 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
     }
   };
 
-  const isFormValid = formData.reviewer_name && formData.email && formData.rating && formData.comment;
+  // Проверка дали всички задължителни полета са попълнени
+  const isFormValid = formData.reviewer_name.trim() !== '' &&
+                      formData.email.trim() !== '' &&
+                      formData.rating > 0 &&
+                      formData.comment.trim() !== '';
 
   return (
     <div className={styles.modalBackdrop}>
       <div className={styles.modalBox}>
-        <div className={styles.modalHeader}>
-          <h2 className={styles.title}>Leave a review for {productName}</h2>
-          <button onClick={onClose} className={styles.closeBtn}>
+        <div className={styles.closeBtn}>
+        <button onClick={onClose} aria-label="Close review form">
             <X size={20} />
           </button>
+        </div>
+        <div className={styles.modalHeader}>
+          <h2 className={styles.title}>Leave a review</h2>
+         
         </div>
 
         <div className={styles.formContent}>
           <div className={styles.fieldGroup}>
-            <label htmlFor="reviewer_name" className={styles.label}>Name *</label>
+            <label htmlFor="reviewer_name" className={styles.label}>Name <span style={{ color: '#ef4444' }}>*</span></label>
             <input
               type="text"
               id="reviewer_name"
               name="reviewer_name"
+              placeholder="Your name"
               value={formData.reviewer_name}
               onChange={handleInputChange}
               className={styles.input}
               required
+              aria-required="true"
             />
           </div>
 
           <div className={styles.fieldGroup}>
-            <label htmlFor="email" className={styles.label}>Email</label>
+            <label htmlFor="email" className={styles.label}>Email <span style={{ color: '#ef4444' }}>*</span></label>
             <input
               type="email"
               id="email"
               name="email"
+              placeholder="Enter your email"
               value={formData.email}
               onChange={handleInputChange}
               className={styles.input}
+              required
+              aria-required="true"
             />
           </div>
 
           <div className={styles.fieldGroup}>
-            <label className={styles.label}>Rating *</label>
+            <label className={styles.label}>Rating <span style={{ color: '#ef4444' }}>*</span></label>
             <div className={styles.stars}>
               {[1, 2, 3, 4, 5].map(star => (
                 <button
@@ -177,6 +156,7 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
                     ? styles.starFilled
                     : styles.starEmpty
                     } ${styles.starHover}`}
+                  aria-label={`Give ${star} star${star === 1 ? '' : 's'}`}
                 >
                   <Star size={20} />
                 </button>
@@ -190,26 +170,29 @@ const ReviewModal: React.FC<ReviewModalProps> = ({
               type="text"
               id="review_title"
               name="review_title"
-              value={formData.review_title || ''} // Default to empty string if undefined
+              placeholder="Enter review title"
+              value={formData.review_title || ''}
               onChange={handleInputChange}
               className={styles.input}
             />
           </div>
 
           <div className={styles.fieldGroup}>
-            <label htmlFor="comment" className={styles.label}>Review *</label>
+            <label htmlFor="comment" className={styles.label}>Review <span style={{ color: '#ef4444' }}>*</span></label>
             <textarea
               id="comment"
               name="comment"
+              placeholder="Write your review"
               value={formData.comment}
               onChange={handleInputChange}
               rows={4}
               className={styles.textarea}
               required
+              aria-required="true"
             />
           </div>
 
-          {/* COMMENTED OUT THE ENTIRE IMAGE UPLOAD SECTION */}
+          {/* Секцията за качване на снимки е коментирана, както в оригиналния ти код */}
           {/*
           <div className={styles.fieldGroup}>
             <label className={styles.label}>Upload a photo (optional)</label>
