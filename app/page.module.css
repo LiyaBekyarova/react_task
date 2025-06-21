@@ -1,95 +1,101 @@
-.container {
-  display: grid;
-  grid-template-rows: 20px 1fr 20px;
-  align-items: center;
-  justify-items: center;
-  padding: 2rem 1rem 5rem;
-  gap: 4rem;
+.pageContainer {
   max-width: 100%;
   overflow-x: hidden;
-  box-sizing: border-box;
   margin: 0;
-  padding: 2rem 1rem 5rem;
+  padding: 0;
+  color: #2d3748;
+  background-color: #ffffff;
 }
 
-.main {
+.hero {
+  min-height: 80vh;
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  grid-row: 2;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+.heroContent {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .logo {
-  filter: var(--logo-filter, none);
   max-width: 100%;
   height: auto;
-  display: block;
+  margin-bottom: 1rem;
+  filter: var(--logo-filter, none);
 }
 
-.buttonContainer {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  flex-direction: column;
-  background-color: '#000000';
-
+.heroTitle {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #1a202c;
+  line-height: 1.2;
+  margin: 0;
 }
 
-.button {
-  display: flex;
+.heroSubtitle {
+  font-size: 1.25rem;
+  color: #4a5568;
+  max-width: 600px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.ctaButton {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  padding: 0.875rem 2rem;
   border-radius: 9999px;
-  border: 1px solid transparent;
-  transition: background-color 0.2s;
-  font-weight: 500;
-  font-size: 0.875rem;
-  height: 2.5rem;
-  padding: 0 1rem;
+  font-weight: 600;
   text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  background-color: #2d3748;
+  color: white;
+  border: 2px solid #2d3748;
+  margin-top: 1rem;
 }
 
-.button:hover {
-  background: #383838;
+.ctaIcon {
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
-.buttonIcon {
-  filter: var(--logo-filter, none);
-}
-
-/* Dark mode styles */
+/* Dark Mode */
 @media (prefers-color-scheme: dark) {
-  .button {
-    background: var(--foreground);
-    color: var(--background);
+  .pageContainer {
+    background-color: #1a202c;
+    color: #e2e8f0;
   }
-  
-  .button:hover {
-    background: #ccc;
-  }
-  
-  .logo,
-  .buttonIcon {
-    filter: invert(1);
+
+  .heroSubtitle {
+    color: #cbd5e0;
   }
 }
 
-/* Responsive styles */
+/* Responsive Design */
 @media (min-width: 640px) {
-  .container {
-    padding: 5rem 5rem 5rem;
+  .heroTitle {
+    font-size: 3.5rem;
   }
   
-  .buttonContainer {
-    flex-direction: row;
+  .heroSubtitle {
+    font-size: 1.5rem;
   }
-  
-  .button {
-    font-size: 1rem;
-    height: 3rem;
-    padding: 0 1.25rem;
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    padding: 4rem 2rem;
   }
 }

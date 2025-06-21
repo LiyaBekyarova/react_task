@@ -11,9 +11,11 @@ interface ReviewsOverviewProps {
   onReviewReaction: (updatedReview: Review) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onReviewSubmit: (reviewData: any) => void;
+  productId?: number;
 }
 export const ReviewsOverview = ({
   reviews,
+  productId,
   onReviewSubmit,
   onReviewReaction
 }: ReviewsOverviewProps) => {
@@ -43,12 +45,12 @@ export const ReviewsOverview = ({
       </div>
       <div>
         <ReviewModal
-          productId={reviews[0]?.product_id}
+          productId={productId}
           isOpen={showModal}
           onClose={() => setShowModal(false)}
           onSubmit={handleReviewSubmit}
           productName={reviews[0]?.product_title}
-          key={showModal ? 'open' : 'closed'} // Force remount when opening/closing
+          key={showModal ? 'open' : 'closed'} 
         />
       </div>
     </div>

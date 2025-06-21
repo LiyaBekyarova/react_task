@@ -1,15 +1,23 @@
 .container {
     width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.content {
     max-width: 1400px;
-    margin: 2rem auto;
+    margin: 0 auto;
     padding: 0 1rem;
     box-sizing: border-box;
 }
 
 @media (min-width: 768px) {
     .container {
-        margin: 4rem auto;
-        padding: 0 2rem;
+        margin: 0 auto;
+
     }
 }
 

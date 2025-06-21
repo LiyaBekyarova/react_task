@@ -8,7 +8,7 @@
 
 .headingContainer {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     margin-bottom: 2rem;
     width: 100%;
@@ -20,14 +20,14 @@
 }
 
 .p {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 2rem;
     color: #222;
     margin: 0;
     line-height: 1.2;
+
 }
 
-/* Tablet */
 @media (min-width: 600px) {
     .container {
         padding: 0 1.5rem;
@@ -38,7 +38,6 @@
     }
 }
 
-/* Small Desktop */
 @media (min-width: 900px) {
     .container {
         padding: 0 2rem;
@@ -49,7 +48,6 @@
     }
 }
 
-/* Large Desktop */
 @media (min-width: 1200px) {
     .container {
         max-width: 1400px;
@@ -60,11 +58,11 @@
     }
 }
 
-/* Mobile adjustments */
 @media (max-width: 480px) {
     .container {
         margin: 2rem auto;
         padding: 0 1rem;
+        justify-content: flex-start;
     }
     
     .p {
@@ -73,5 +71,6 @@
     
     .headingContainer {
         margin-bottom: 1.5rem;
+        justify-content: flex-start;
     }
 }

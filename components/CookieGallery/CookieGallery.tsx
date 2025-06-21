@@ -45,7 +45,7 @@ export const CookieGallery = ({ images = [] }: { images?: images[] }) => {
             alt="Cookie"
             width={image?.width}
             height={image?.height}
-            className={styles.img}
+            className={styles.containerSmallImages}
           />
         ))}
     </div>

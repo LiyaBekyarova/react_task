@@ -1,41 +1,35 @@
 import Image from "next/image";
+import Link from "next/link";
 import styles from './page.module.css';
 
 export default function Home() {
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/logo.png"
-          alt="Next.js logo"
-          width={580}
-          height={150}
-          priority
-          quality={100}
-          style={{
-            objectFit: 'contain',
-          }}
-        />
-        
-        <div className={styles.buttonContainer}>
-          <a
-            className={styles.button}
-            href="/products"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.buttonIcon}
-              src="/logo-react-svgrepo-com.svg"
-              alt="React logo"
-              width={20}
-              height={20}
-            />
-            React task
-          </a>
+    <div className={styles.pageContainer}>
+      {/* Hero Section */}
+      <section className={styles.hero}>
+        <div className={styles.heroContent}>
+          <Image
+            src="/logo.png"
+            alt="Craftberry Logo"
+            width={580}
+            height={150}
+            priority
+            className={styles.logo}
+          />
+          <h1 className={styles.heroTitle}>Handcrafted Delights for Every Occasion</h1>
+          <p className={styles.heroSubtitle}>Discover our collection of artisanal cookies made with love and premium ingredients</p>
+          <Link href="/products" className={styles.ctaButton}>
+            Shop Now
+            <svg className={styles.ctaIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </Link>
         </div>
-      </main>
+      </section>
+
+    
+
+     
     </div>
   );
 }

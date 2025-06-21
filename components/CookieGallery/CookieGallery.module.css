@@ -2,36 +2,26 @@
 .imageContainer {
   max-width: 600px; 
   width: 100%;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
   gap: 10px;
+
 }
 
 .bigImg {
   max-width: 100%;
   height: auto;
-  border-radius: 12px;
+  object-fit: cover;
+}
+
+
+.containerSmallImages {
+  max-height: 166px;
+  max-width: 166px;
   object-fit: contain;
-  display: block;
 }
 
-
-/* .containerSmallImages {
-  display: flex;
-  flex-direction: row;
-  gap: 12px;
-  height: 166px;
-  width: 166px;
-  flex-shrink: 0;
-} */
-
-.img {
-width: 166px;
-height: 166px;
-}
 
 .placeholder {
   display: flex;
@@ -47,34 +37,24 @@ height: 166px;
   border-radius: 12px;
 }
 
-/* Mobile responsive */
-@media (max-width: 768px) {
-  .gallery {
-    flex-direction: column;
-    gap: 16px;
-    padding: 16px;
-  }
-
+@media (max-width: 900px) {
   .containerSmallImages {
-    flex-direction: row;
-    width: 100%;
-    justify-content: flex-start;
-    overflow-x: auto;
-    padding-bottom: 8px;
+    max-height: 100px;
+    max-width: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .containerSmallImages {
+    max-height: 120px;
+    max-width: 120px;
+
   }
 
-  .thumbnailContainer {
-    flex-shrink: 0;
-  }
 }
 
 @media (max-width: 480px) {
   .gallery {
     padding: 12px;
-  }
-
-  .thumbnailContainer {
-    width: 60px;
-    height: 60px;
   }
 }

@@ -1,24 +1,23 @@
-
 .title {
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 34px;
-    line-height: 110%;
-    color: #000000;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 110%;
+  color: #000000;
 }
 
 .price {
-font-family: 'Montserrat';
-font-style: normal;
-font-weight: 400;
-font-size: 28px;
-line-height: 140%;
-color: #000000;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 140%;
+  color: #000000;
 }
 
 .desc {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -30,21 +29,31 @@ color: #000000;
   max-width: 100%;
 }
 
-.btn {
-  background-color: #7d3c1d;
+.addToCartButton {
+  background-color: #9F3419;
+  width: 100%;
   color: white;
-  padding: 0.75rem 1.5rem;
+  padding: 1rem 2rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 20px;
   cursor: pointer;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
 }
-.container{
-    width: 100%;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-  
+.container {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
 
+.slogan {
+  text-transform: uppercase;
+  color: #9f3419;
+  font-weight: bold;
 }

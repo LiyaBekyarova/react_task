@@ -12,5 +12,7 @@ export interface Review {
     likes: number;
     dislikes: number;
     userReaction?: "liked" | "disliked" | null; 
-    image?: string; 
+    // For form handling
+    image?: File | string; // Can be either File (for new uploads) or string (for existing images)
+    imageFile?: File; // Temporary storage for file before upload
   }

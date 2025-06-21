@@ -8,11 +8,11 @@ import { Review } from "@/types/review";
 
 export default function Page({ params }: { params: { id: string } }) {
   const { id } = params;
-  const productData = useMemo(() => 
-    productsData.products.find((p) => p.handle === id),
+  const productData = useMemo(
+    () => productsData.products.find((p) => p.handle === id),
     [id]
   );
- // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [productReviews, setProductReviews] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -29,27 +29,24 @@ export default function Page({ params }: { params: { id: string } }) {
         setError(null);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let reviews: any[] = [];
-        
+
         // Check if we're in the browser and localStorage is available
         if (typeof window !== "undefined" && window.localStorage) {
           const cachedReviews = localStorage.getItem("reviews");
-          
+
           if (cachedReviews) {
             reviews = JSON.parse(cachedReviews);
           } else {
-            // Fetch from API if not in localStorage
             const res = await fetch("/reviews.json");
             if (!res.ok) {
               throw new Error(`Failed to fetch reviews: ${res.status}`);
             }
             const data = await res.json();
             reviews = data.reviews || [];
-            
-            // Cache the reviews
+
             localStorage.setItem("reviews", JSON.stringify(reviews));
           }
         } else {
-          // Fallback for SSR or when localStorage is not available
           const res = await fetch("/reviews.json");
           if (!res.ok) {
             throw new Error(`Failed to fetch reviews: ${res.status}`);
@@ -58,10 +55,9 @@ export default function Page({ params }: { params: { id: string } }) {
           reviews = data.reviews || [];
         }
 
-        // Ensure productData.id is a number and filter reviews
         const productId = Number(productData.id);
         const filtered = reviews.filter((r) => r.product_id === productId);
-        
+
         setProductReviews(filtered);
       } catch (e) {
         console.error("Failed to load reviews:", e);
@@ -100,74 +96,73 @@ export default function Page({ params }: { params: { id: string } }) {
       </div>
     );
   }
-const handleReviewSubmit = (reviewData: Review) => {
-  try {
-    console.log('Received review data:', reviewData);
-    
-    const currentReviews = JSON.parse(localStorage.getItem("reviews") || "[]");
-    const now = new Date();
-    const formattedDate = now.toISOString().split('T')[0];
-    
-    // Create a new review with all required fields
-    const newReview: Review = {
-      ...reviewData,
-      id: Date.now(),
-      product_id: Number(productData.id),
-      product_title: productData.title,
-      date: formattedDate,
-      likes: 0,
-      dislikes: 0,
-      userReaction: null
-    };
-    
-    console.log('New review to be saved:', newReview);
-    
-    // Add the new review to the beginning of the array (most recent first)
-    const updatedReviews = [newReview, ...currentReviews];
-    
-    // Save to localStorage
-    localStorage.setItem("reviews", JSON.stringify(updatedReviews));
-    
-    // Update the component's state with reviews for the current product only
-    const productId = Number(productData.id);
-    const filteredProductReviews = updatedReviews.filter(
-      (r: Review) => r.product_id === productId
+  const handleReviewSubmit = (reviewData: Review) => {
+    try {
+      console.log("Received review data:", reviewData);
+
+      const currentReviews = JSON.parse(
+        localStorage.getItem("reviews") || "[]"
+      );
+      const now = new Date();
+      const formattedDate = now.toISOString().split("T")[0];
+
+      const newReview: Review = {
+        ...reviewData,
+        id: Date.now(),
+        product_id: Number(productData.id),
+        product_title: productData.title,
+        date: formattedDate,
+        likes: 0,
+        dislikes: 0,
+        userReaction: null,
+      };
+
+      console.log("New review to be saved:", newReview);
+
+      const updatedReviews = [newReview, ...currentReviews];
+
+      localStorage.setItem("reviews", JSON.stringify(updatedReviews));
+
+      const productId = Number(productData.id);
+      const filteredProductReviews = updatedReviews.filter(
+        (r: Review) => r.product_id === productId
+      );
+
+      console.log("Updated product reviews:", filteredProductReviews);
+      setProductReviews(filteredProductReviews);
+    } catch (error) {
+      console.error("Error submitting review:", error);
+    }
+  };
+
+  const handleReviewReaction = (updatedReview: Review) => {
+    const allReviewsFromLocalStorage: Review[] = JSON.parse(
+      localStorage.getItem("reviews") || "[]"
     );
-    
-    console.log('Updated product reviews:', filteredProductReviews);
-    setProductReviews(filteredProductReviews);
-    
-  } catch (error) {
-    console.error('Error submitting review:', error);
-  }
-};
 
-
-const handleReviewReaction = (updatedReview: Review) => {
-  // 1. Get ALL reviews from localStorage
-  const allReviewsFromLocalStorage: Review[] = JSON.parse(localStorage.getItem("reviews") || "[]");
-
-  // 2. Find the specific review and update it in the full list
-  const updatedAllReviews = allReviewsFromLocalStorage.map((r) =>
-    r.id === updatedReview.id ? updatedReview : r
-  );
-
-  // 3. Save the full updated list back to localStorage
-  localStorage.setItem("reviews", JSON.stringify(updatedAllReviews));
-
-  // 4. Update the component's state (productReviews)
-  // This is crucial for immediate UI update in the current view
-  setProductReviews((prevProductReviews) =>
-    prevProductReviews.map((r) =>
+    const updatedAllReviews = allReviewsFromLocalStorage.map((r) =>
       r.id === updatedReview.id ? updatedReview : r
-    )
-  );
-};
+    );
+
+    localStorage.setItem("reviews", JSON.stringify(updatedAllReviews));
+
+    setProductReviews((prevProductReviews) =>
+      prevProductReviews.map((r) =>
+        r.id === updatedReview.id ? updatedReview : r
+      )
+    );
+  };
   return (
     <div className={styles.container}>
-      <ImageWithDesc product={productData} />
-      <ReviewsOverview reviews={productReviews} onReviewSubmit={handleReviewSubmit} onReviewReaction={handleReviewReaction}/>
-      
+      <div className={styles.content}>
+        <ImageWithDesc product={productData} reviews={productReviews} />
+        <ReviewsOverview
+          productId={Number(productData.id)}
+          reviews={productReviews}
+          onReviewSubmit={handleReviewSubmit}
+          onReviewReaction={handleReviewReaction}
+        />
+      </div>
     </div>
   );
 }
