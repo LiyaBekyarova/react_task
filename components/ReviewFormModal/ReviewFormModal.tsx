@@ -206,13 +206,22 @@ const ReviewModal = ({
             </label>
             <div className={styles.uploadArea}>
               {formData.image_url ? (
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
                   <Image
                     src={formData.image_url}
                     alt="Preview"
-                    width={400}
-                    height={400}
+                    width={200}
+                    height={200}
                     className={styles.imagePreview}
+                    style={{
+                      objectFit: "contain",
+                    }}
                   />
                   <button
                     onClick={() => {

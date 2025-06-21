@@ -4,18 +4,27 @@
   margin: 20px auto;
   max-width: 100%;
   font-family: Arial, sans-serif;
-  /* box-sizing: border-box; */
 }
+.reviewCardContainer{
+  borderBottom: 1px solid #eee; 
+  paddingBottom: 20px;
+  marginBottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justifyContent: space-between;
+  alignItems: center;
+  gap: 15px;
+  min-width: 100%;
 
-.noReviewsContainer{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 20px;
-    max-width: 900px;
-    margin: 10px auto;
-
+}
+.noReviewsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 900px;
+  margin: 10px auto;
 }
 .allReviewsHeader {
   display: flex;
@@ -67,7 +76,6 @@
 .ratingBarStars {
   display: flex;
   min-width: 80px;
-
 }
 
 .ratingBarProgress {
@@ -80,17 +88,17 @@
 
 .ratingBarFill {
   height: 100%;
-  background-color: #9F3419;
+  background-color: #9f3419;
   border-radius: 4px;
 }
 
 .reviewButton {
-  background-color: #9F3419;
+  background-color: #9f3419;
   color: white;
   border: none;
   padding: 12px 40px;
   cursor: pointer;
-  fontSize: 15px;
+  fontsize: 15px;
   min-width: 200px;
 }
 
@@ -112,44 +120,42 @@
   .ratingBreakdown {
     flex: 1 1 100%;
     min-width: 200px;
-
   }
 
- 
   .pagination button {
     flex: 1 1 auto;
   }
-  .allReviewsWrapper{
+  .allReviewsWrapper {
     margin: 0;
     padding: 0;
   }
 }
 
 .hr {
-    border-top: none;
-    border: 0.7px solid #eee;
-    width: 100%;
-    margin: 20px 0;
+  border: none;
+  border-bottom: 1px solid #eee;
+  width: 100%;
+  margin: 20px 0;
 }
-.reviewerInfo{
+.reviewerInfo {
   min-width: 150px;
   display: flex;
   flex-direction: column;
   gap: 5px;
-  
 }
 @media (max-width: 480px) {
   .reviewButton {
     min-width: 100%;
   }
-  .noReviewsContainer{
-    padding: 0;  }
+  .reviewCardContainer{
+    flex-direction: column;
+  }
+  .noReviewsContainer {
+    padding: 0;
+  }
 
-    .reviewerInfo{
-      min-width: 25px;
-      font-size: 12px;
-
-    }
-  
-    
+  .reviewerInfo {
+    min-width: 25px;
+    font-size: 12px;
+  }
 }

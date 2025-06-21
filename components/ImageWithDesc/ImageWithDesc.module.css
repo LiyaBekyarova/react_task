@@ -21,10 +21,9 @@
   max-width: 100%;
 }
 @media (max-width: 1200px) {
-    .container {
-        margin-top: 4rem;
-
-    }
+  .container {
+    margin-top: 4rem;
+  }
   .galleryContainer {
     margin-top: 2rem;
   }
@@ -32,10 +31,12 @@
 
 @media (max-width: 768px) {
   .container {
+    padding: 0;
     margin-top: 2rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 0;
   }
 
   .galleryContainer {
@@ -43,6 +44,7 @@
     justify-content: center;
     align-items: center;
     max-width: 100%;
+    
   }
 
   .descriptionContainer {
